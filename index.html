@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>DEVQUIZ — Learn to Build. Level Up.</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Scanline overlay -->
+  <div class="scanlines" aria-hidden="true"></div>
+
+  <!-- ── SCREEN 1: Splash ──────────────────────────────────────────────── -->
+  <section class="screen" id="splash" style="display: none;">
+    <div class="splash-inner">
+      <div class="splash-pre">ANTHROPIC_DEVTOOLS v2.6.1 — INITIALISED</div>
+      <h1 class="splash-title">DEVQUIZ</h1>
+      <p class="splash-tagline">Learn to build. Level up.</p>
+      <div class="splash-blink">▮</div>
+      <button class="btn-primary" onclick="startGame()">BOOT GAME</button>
+      <div class="splash-tracks">
+        <span>› Terminal &amp; Git</span>
+        <span>› VS Code &amp; Claude Code</span>
+        <span>› Building &amp; Shipping</span>
+        <span>› History of Programming &amp; Development</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 2: Track Select ────────────────────────────────────────── -->
+  <section class="screen" id="track-select" style="display: none;">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <span class="prompt">$</span>
+        <span class="header-title">SELECT TRACK</span>
+        <span class="score-badge" id="ts-score"></span>
+      </div>
+      <div id="track-grid" class="track-grid"></div>
+      <div class="hud-bar">
+        <div id="ts-lives" class="lives"></div>
+        <span id="ts-score-display" class="score-display"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 3: Level Select ────────────────────────────────────────── -->
+  <section class="screen" id="level-select" style="display: none;">
+    <div class="screen-inner">
+      <div class="screen-header">
+        <span class="prompt">$</span>
+        <span class="header-title">SELECT LEVEL</span>
+      </div>
+      <div class="level-track-name" id="level-track-name"></div>
+      <div id="level-buttons" class="level-buttons"></div>
+      <button class="btn-secondary back-btn" onclick="showTrackOverview(state.currentTrack)">
+        ← BACK
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 4: Gameplay ─────────────────────────────────────────────── -->
+  <section class="screen" id="gameplay" style="display: none;">
+    <div class="screen-inner">
+      <div class="gp-meta">
+        <span id="gp-track" class="gp-track-label"></span>
+        <span id="gp-level" class="gp-level-label"></span>
+        <span id="gp-progress" class="gp-progress"></span>
+        <span id="gp-score" class="gp-score"></span>
+      </div>
+      <div class="lives-row">
+        <span class="lives-label">LIVES:</span>
+        <span id="gp-lives" class="lives"></span>
+      </div>
+      <div class="question-box">
+        <span class="question-prompt">?&gt;</span>
+        <p id="gp-question" class="question-text"></p>
+      </div>
+      <div id="gp-options" class="options-grid"></div>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 5: Answer Feedback ──────────────────────────────────────── -->
+  <section class="screen" id="feedback" style="display: none;">
+    <div class="screen-inner">
+      <div id="fb-banner" class="feedback-banner"></div>
+
+      <div class="fb-answer-row">
+        <span id="fb-chosen" class="fb-chosen"></span>
+        <div id="fb-correct-line" style="display:none">
+          <span id="fb-correct-answer" class="fb-correct-answer"></span>
+        </div>
+      </div>
+
+      <div class="fb-explanation-box">
+        <p id="fb-explanation" class="fb-explanation"></p>
+      </div>
+
+      <button class="btn-learn-more" id="fb-learn-toggle" onclick="toggleLearnMore()">
+        [+ Learn More]
+      </button>
+      <div id="fb-learn-more" class="fb-learn-more-panel" style="display:none">
+        <p id="fb-detail"></p>
+      </div>
+
+      <div class="fb-hud">
+        <div class="lives-row">
+          <span class="lives-label">LIVES:</span>
+          <span id="fb-lives" class="lives"></span>
+        </div>
+        <span id="fb-score" class="gp-score"></span>
+      </div>
+
+      <button class="btn-primary" id="fb-next" onclick="nextAfterFeedback()">
+        &gt; NEXT QUESTION
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 6: Level Complete ───────────────────────────────────────── -->
+  <section class="screen" id="level-complete" style="display: none;">
+    <div class="screen-inner lc-inner">
+      <div class="lc-header">LEVEL COMPLETE</div>
+      <div class="lc-ascii">
+        ██████████████████<br>
+        █  ACCESS GRANTED █<br>
+        ██████████████████
+      </div>
+      <div class="lc-stats">
+        <div class="lc-row">Track: <span id="lc-track"></span></div>
+        <div class="lc-row">Level <span id="lc-level"></span> cleared</div>
+        <div class="lc-row">+<span id="lc-earned"></span> pts earned this level</div>
+        <div class="lc-row total">Total Score: <span id="lc-score"></span></div>
+      </div>
+      <button class="btn-primary" id="lc-next"></button>
+      <button class="btn-secondary" onclick="showScreen('track-select'); renderTrackSelect();">
+        ← BACK TO TRACKS
+      </button>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 7: Game Over ────────────────────────────────────────────── -->
+  <section class="screen" id="game-over" style="display: none;">
+    <div class="screen-inner go-inner">
+      <div class="go-header">GAME OVER</div>
+      <div class="go-ascii">
+        ████████████████<br>
+        █  CONNECTION   █<br>
+        █   TERMINATED  █<br>
+        ████████████████
+      </div>
+      <div class="go-stats">
+        <div class="go-row">Final Score: <span id="go-score" class="go-highlight"></span></div>
+        <div class="go-row">Questions answered: <span id="go-answered"></span></div>
+        <div class="go-row">Correct answers: <span id="go-correct"></span></div>
+        <div class="go-row">Accuracy: <span id="go-pct"></span>%</div>
+      </div>
+      <button class="btn-primary" onclick="startGame()">RESTART</button>
+    </div>
+  </section>
+
+  <!-- ── SCREEN 8: Learn ────────────────────────────────────────────────── -->
+  <section class="screen" id="learn-screen" style="display: none;">
+    <div class="screen-inner">
+
+      <div class="learn-header">
+        <span class="learn-track-label" id="ls-track-label"></span>
+        <span class="learn-level-sep">—</span>
+        <span class="learn-level-label" id="ls-level-label"></span>
+      </div>
+
+      <h2 class="lesson-title" id="ls-title"></h2>
+
+      <div class="lesson-body" id="ls-body"></div>
+
+      <div class="example-block">
+        <div class="example-label" id="ls-example-label"></div>
+        <code id="ls-example-code"></code>
+      </div>
+
+      <div class="lesson-btn-row">
+        <button class="btn-secondary" onclick="startQuiz()">SKIP LESSON</button>
+        <button class="btn-primary" onclick="startQuiz()">START QUIZ</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── SCREEN 9: Track Overview ──────────────────────────────────────── -->
+  <section class="screen" id="track-overview-screen" style="display: none;">
+    <div class="screen-inner">
+
+      <div class="screen-header">
+        <span class="prompt">$</span>
+        <span class="header-title" id="tov-track-name"></span>
+      </div>
+
+      <h2 class="lesson-title" id="tov-title"></h2>
+
+      <div class="lesson-body" id="tov-body"></div>
+
+      <div class="example-block">
+        <div class="example-label" id="tov-highlight-label">KEY INSIGHT:</div>
+        <p id="tov-highlight-text"></p>
+      </div>
+
+      <div class="lesson-btn-row">
+        <button class="btn-secondary" onclick="showScreen('track-select'); renderTrackSelect();">← BACK</button>
+        <button class="btn-primary" onclick="showLevelSelect(state.currentTrack)">SELECT LEVEL</button>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="questions.js"></script>
+  <script src="game.js"></script>
+
+  <script>
+    // Sync HUD elements on track-select and update live scores
+    function startGame() {
+      initState();
+      showScreen("track-select");
+      renderTrackSelect();
+      updateHUD();
+    }
+
+    function updateHUD() {
+      const livesEl = document.getElementById("ts-lives");
+      const scoreEl = document.getElementById("ts-score-display");
+      if (livesEl) {
+        livesEl.innerHTML = Array.from({ length: 3 }, (_, i) =>
+          `<span class="${i < state.lives ? 'life-active' : 'life-lost'}">▲</span>`
+        ).join('');
+      }
+      if (scoreEl) scoreEl.textContent = `Score: ${state.score}`;
+    }
+
+    // Patch selectTrack to refresh HUD
+    const _origSelectTrack = selectTrack;
+    window.selectTrack = function(track) {
+      _origSelectTrack(track);
+    };
+
+    showScreen('splash');
+  </script>
+</body>
+</html>
