@@ -3,6 +3,7 @@
 // TRACK_NAMES: flat list used for state initialisation and rendering.
 // TRACKS and LEVELS (arrays of objects) come from questions.js, loaded first.
 const TRACK_NAMES = [
+  "How It All Works",
   "Terminal & Git",
   "VS Code & Claude Code",
   "Building & Shipping",

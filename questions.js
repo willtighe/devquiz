@@ -1,6 +1,22 @@
 const TRACKS = [
 
   {
+    track: "How It All Works",
+    overview: {
+      title: "Before You Write a Single Line of Code",
+      body: [
+        "Most people jump into coding without understanding the world the code lives in. This track fixes that. You'll learn what files actually are, why browsers work the way they do, and why developers use tools that look like they're from the 1980s.",
+        "None of this requires you to write code. It's about building a mental model — the map in your head that makes everything else make sense. Once you have it, terms like 'repo', 'server', and 'API' stop being intimidating and start being obvious.",
+        "Every developer you admire started here, whether they knew it or not. The ones who understand the foundations are the ones who can debug anything, learn any new tool quickly, and explain what they're doing to anyone."
+      ],
+      highlight: {
+        label: "KEY INSIGHT:",
+        text: "Code is just text files. The magic is in understanding which text goes where, and why."
+      }
+    }
+  },
+
+  {
     track: "Terminal & Git",
     overview: {
       title: "The Tools Every Developer Lives In",
@@ -69,6 +85,187 @@ const TRACKS = [
 const LEVELS = [
 
   // ═══════════════════════════════════════════════════════════════
+  // TRACK: How It All Works
+  // ═══════════════════════════════════════════════════════════════
+
+  {
+    track: "How It All Works",
+    level: 1,
+    lesson: {
+      title: "Files, Browsers & the Big Three",
+      body: [
+        "Everything on a website is made of files — and the extension at the end of a filename (.html, .css, .js, .md) tells you what's inside. Think of it like the difference between a letter, a blueprint, and a recipe: same concept (a document), but completely different purposes. The three core files of any webpage are HTML, CSS, and JavaScript, and they each do exactly one job.",
+        "Here's the analogy that makes it click: HTML is the walls and rooms of a house — the structure, the content, what's actually there. CSS is the paint, the furniture, the lighting — how it all looks. JavaScript is the electricity — what makes things move, respond, and do something when you interact with them. Take away CSS and your house is still standing, just ugly. Take away JavaScript and it's beautiful but completely unresponsive.",
+        "When you open a webpage, the browser reads the HTML first, then fetches all the CSS and JavaScript files it references, then renders everything together. This is why the file called index.html is special — when a browser opens a folder or visits a URL without a specific filename, it looks for index.html by default. Name your main page anything else and the browser won't find it automatically."
+      ],
+      example: {
+        label: "The three files that make every website:",
+        code: "index.html  ← structure (what's on the page)\nstyle.css   ← style (what it looks like)\napp.js      ← behaviour (what it does)"
+      }
+    },
+    questions: [
+      {
+        id: "hw-1-1",
+        question: "You open a website and the layout is perfect but it looks completely unstyled — plain black text on a white background, no colors or fonts at all. Which file is most likely missing or broken?",
+        options: ["The HTML file", "The CSS file", "The JavaScript file", "The index.html file"],
+        answer: "The CSS file",
+        explanation: "CSS controls all visual styling — colors, fonts, spacing, and layout. If it's missing, the content still shows (from HTML) but has no design at all.",
+        detail: "This is actually a useful debugging trick: disabling CSS in your browser's developer tools reveals the raw HTML structure underneath. If content is visible but unstyled, the HTML loaded fine. If buttons don't work, check JavaScript. Each of the three layers fails independently, which makes it easier to isolate what's broken."
+      },
+      {
+        id: "hw-1-2",
+        question: "Your website looks great and loads correctly, but the buttons do nothing when your friend clicks them. The layout and colors are all there. Which layer of the three-file system is the problem?",
+        options: ["HTML — the page structure is corrupted", "CSS — the visual styles have an error", "JavaScript — the interactive behaviour is broken or missing", "index.html — the entry point failed to load"],
+        answer: "JavaScript — the interactive behaviour is broken or missing",
+        explanation: "If a page looks right but doesn't respond to interaction, JavaScript is the missing layer. It's the only one responsible for behaviour — clicks, animations, and dynamic changes.",
+        detail: "HTML = what's there. CSS = what it looks like. JavaScript = what it does. When something is wrong, this framework tells you exactly where to look: page loads but looks broken? CSS. Page looks fine but doesn't respond? JavaScript. Page doesn't load at all? HTML or the server. Open your browser's developer console (F12) to see JavaScript error messages when things stop working."
+      },
+      {
+        id: "hw-1-3",
+        question: "You build a website with three files: home.html, style.css, and app.js. You upload all of them to a web host, but visitors get a blank page or error when they go to your URL. The files are all there. What's most likely wrong?",
+        options: ["The CSS file has a syntax error", "The main page was named home.html instead of index.html", "The JavaScript file is too large to serve", "The browser doesn't support modern HTML"],
+        answer: "The main page was named home.html instead of index.html",
+        explanation: "Servers look for index.html by default when no specific file is requested. Any other name won't be found automatically when someone visits your URL.",
+        detail: "When a browser visits yoursite.com/, the server looks inside that folder for a file called index.html. This is a universal convention — Apache, Nginx, GitHub Pages all follow it. Rename home.html to index.html and the problem disappears. The same applies to subfolders: yoursite.com/about/ will look for an index.html inside a folder called 'about'."
+      },
+      {
+        id: "hw-1-4",
+        question: "You hover over a button on a website and it smoothly changes color. You want to understand why it does that. Which file should you look in, and why?",
+        options: ["HTML — it defines the button's properties", "CSS — it controls visual appearance including hover states and transitions", "JavaScript — it handles all user interactions", "The server — it sends a different style when it detects a hover"],
+        answer: "CSS — it controls visual appearance including hover states and transitions",
+        explanation: "Hover color changes are defined in CSS using the :hover selector. No JavaScript needed — CSS alone handles visual-only changes like color, size, and smooth transitions.",
+        detail: "CSS has 'pseudo-classes' — keywords that apply styles based on the state an element is in. The :hover pseudo-class applies styles when a mouse moves over an element. You can also add 'transition' in CSS to animate the change smoothly. JavaScript is only needed when interactions involve logic, data fetching, or major DOM changes — not just visual appearance."
+      },
+      {
+        id: "hw-1-5",
+        question: "A colleague sends you a file called README.md. You open it in a text editor and see lines like '# My Project' and '**important**'. What is .md and what are these symbols?",
+        options: ["A binary music data format that displays incorrectly in text editors", "A Markdown file — plain text with simple symbols that render as formatted headings and bold text", "A compiled Mac application that needs to be executed, not read", "A database format used internally by developer tools"],
+        answer: "A Markdown file — plain text with simple symbols that render as formatted headings and bold text",
+        explanation: ".md stands for Markdown — a lightweight format where # creates a heading and ** wraps bold text. It's designed to be readable as plain text and render beautifully as formatted content.",
+        detail: "Markdown was designed to be human-readable in its raw form while also converting cleanly to HTML. GitHub automatically renders .md files — that's why every repository has a README.md that shows up as a nicely formatted page with headings, lists, and code blocks. VS Code, Notion, and most developer tools support Markdown natively. It's one of the most widely used plain-text formats in software development."
+      }
+    ]
+  },
+
+  {
+    track: "How It All Works",
+    level: 2,
+    lesson: {
+      title: "The Terminal & Version Control",
+      body: [
+        "The terminal is the thing that looks like something from a 1980s hacker movie — black screen, blinking cursor, text commands. It's not old-fashioned, it's precise. Instead of clicking through menus, you type exactly what you want your computer to do. The analogy: using a GUI (graphical interface) is like tapping your order on a restaurant touchscreen. Using the terminal is like texting the chef directly. Both get you food, but one gives you far more control and can be fully automated.",
+        "Git is a version control system — and the best way to understand it is as a time machine for your project. Every time you reach a meaningful point, you take a snapshot called a commit. Each commit has a label you write yourself (like 'add login page') and a timestamp. If you ever break something, you can jump back to any previous snapshot instantly. Unlike Ctrl+Z, Git's history never expires and it works across your entire project at once.",
+        "Here's the distinction that trips everyone up: Git and GitHub are not the same thing. Git is a tool that runs on your computer. GitHub is a website where you store copies of your Git history in the cloud. Think of Git as your notebook and GitHub as a safety deposit box at the bank. A 'commit' creates a snapshot in your local notebook. A 'push' sends those snapshots to the bank. If your laptop is stolen, everything you pushed to GitHub is safe."
+      ],
+      example: {
+        label: "The Git workflow — save a moment in time:",
+        code: "git add .                       # stage your changes\ngit commit -m \"add login page\"  # create the snapshot\ngit push                        # send it to GitHub"
+      }
+    },
+    questions: [
+      {
+        id: "hw-2-1",
+        question: "You want to create a new project folder, navigate into it, and create an empty index.html file — all without touching your mouse. What tool lets you do this with a few typed commands?",
+        options: ["The file browser (Finder or Windows Explorer)", "A text editor like VS Code or Notepad", "The terminal", "A web browser's developer tools"],
+        answer: "The terminal",
+        explanation: "The terminal accepts text commands that control your computer directly — creating folders, navigating into them, and creating files are all single commands.",
+        detail: "In the terminal: mkdir my-project creates the folder, cd my-project navigates into it, and touch index.html creates the file. Three commands, done. Compare that to right-clicking, naming a folder, opening it, then creating a new file through a menu. The terminal is faster for individual tasks and infinitely more powerful for repeated ones — you can save those commands as a script that runs automatically whenever you start a new project."
+      },
+      {
+        id: "hw-2-2",
+        question: "You've been building a feature for three days. A change you made today broke everything and you can't undo it. You wish you could return to how the project was yesterday morning. What tool is designed exactly for this?",
+        options: ["A cloud sync service like Dropbox or iCloud", "Git — version control that saves named snapshots of your project at each commit", "Your text editor's undo history", "Manually copying files to a backup folder each day"],
+        answer: "Git — version control that saves named snapshots of your project at each commit",
+        explanation: "Git lets you commit (snapshot) your project at any meaningful point and return to any previous commit at any time, no matter how much has changed since.",
+        detail: "Dropbox saves the latest version of a file. A text editor's undo history disappears when you close it. Git saves intentional snapshots — you decide when to commit and write a message explaining what that snapshot represents. Developers commit before risky changes, after features start working, and before major refactors. It's a deliberate practice, not just a feature."
+      },
+      {
+        id: "hw-2-3",
+        question: "You've been committing your project to Git on your laptop every day for a month. Your laptop gets stolen. Is your code gone? What determines the answer?",
+        options: ["Yes — Git only saves snapshots on your local machine", "It depends — if you pushed your commits to GitHub, the code is safe; if you only committed locally, it's lost", "No — Git automatically backs everything up to the cloud", "It depends on whether you have a paid Git subscription"],
+        answer: "It depends — if you pushed your commits to GitHub, the code is safe; if you only committed locally, it's lost",
+        explanation: "Git commits live on your local machine. Pushing sends them to GitHub. Until you push, nothing exists in the cloud — committing and pushing are two separate steps.",
+        detail: "This trips people up constantly. git commit creates a snapshot in your local .git folder. git push sends those snapshots to GitHub's servers. Many developers commit frequently and push at the end of each day (or more often). If you only ever committed locally, those commits were on your machine. The lesson: push regularly — it's free, instant, and it's your offsite backup."
+      },
+      {
+        id: "hw-2-4",
+        question: "You've finished a working feature — the login page looks right and works perfectly. You want to save this moment in Git so you can always come back to exactly this state. What do you do, in the correct order?",
+        options: ["git push, then git commit", "git save, then git upload", "git add, then git commit", "git commit, then git add"],
+        answer: "git add, then git commit",
+        explanation: "You first stage your changes with git add (selecting what to include), then create the named snapshot with git commit. Pushing to GitHub comes after, when you're ready to sync.",
+        detail: "The three-step Git workflow: git add . (stage everything changed), git commit -m 'describe what you did' (create the snapshot with a label), git push (send it to GitHub). You don't have to push every time you commit — many developers commit multiple times throughout the day and push once before finishing. Every commit message should make sense to you six months from now."
+      },
+      {
+        id: "hw-2-5",
+        question: "Your friend asks why developers use the terminal instead of just clicking through menus — clicking seems easier. You explain that the real advantage isn't speed. What is it?",
+        options: ["The terminal is always faster for every type of task", "Terminal commands can be saved as scripts and run automatically — you can't automate clicking through menus the same way", "Most employers require terminal proficiency for legal reasons", "Graphical interfaces don't actually work on professional-grade computers"],
+        answer: "Terminal commands can be saved as scripts and run automatically — you can't automate clicking through menus the same way",
+        explanation: "The real power of the terminal is automation — commands can be written once, saved as a script, and run by other systems without any human involvement.",
+        detail: "Imagine needing to run tests, build your app, and deploy to a server every time anyone pushes new code. A human can't click through that manually every time. But you can write those steps as terminal commands in a script file, and a service like GitHub Actions runs them automatically on every push. That's CI/CD — and it's only possible because the terminal is programmable. Mouse clicks are not."
+      }
+    ]
+  },
+
+  {
+    track: "How It All Works",
+    level: 3,
+    lesson: {
+      title: "How the Internet Actually Works",
+      body: [
+        "When you type a URL and hit enter, about a dozen things happen in under a second — and most people have no idea what they are. Here's the journey: your browser asks a DNS (Domain Name System) server to translate the human-readable address (like 'github.com') into a numeric IP address — the actual location of a server on the internet. Then it sends a request to that server. The server sends back your files. Your browser renders them. Done. The analogy: the browser is a customer, the URL is a restaurant's address, DNS is the phone book, and the server is the kitchen sending out your order.",
+        "Hosting is what makes a website publicly accessible. When you open files on your laptop, only you can see them. Hosting means putting those files on a server — a computer that's always on, always connected to the internet, and has a public address anyone can reach. GitHub Pages does this for free: push your code to a repository, enable Pages, and GitHub serves your index.html at a real URL. Your files don't move to people's computers when they visit — they request and receive a fresh copy from the server each time.",
+        "An API (Application Programming Interface) is how two programs talk to each other. Think of it like a waiter: you don't go into the kitchen, you tell the waiter what you want, and the kitchen prepares it and sends it out. A weather app doesn't build its own forecast — it sends a request to a weather service's API and gets back structured data. A payment button doesn't process cards itself — it talks to Stripe's API. Almost every modern app you use is secretly a collection of API calls, assembled into something that looks seamless."
+      ],
+      example: {
+        label: "What happens when you type a URL:",
+        code: "1. Browser asks DNS: where is 'devquiz.com'?\n2. DNS replies: 'It's at 185.199.108.153'\n3. Browser asks that server: 'Give me the page'\n4. Server sends: index.html, style.css, game.js\n5. Browser renders it all — you see the game"
+      }
+    },
+    questions: [
+      {
+        id: "hw-3-1",
+        question: "You type 'github.com' into your browser and hit enter. In the milliseconds before the page loads, your browser has to find out where github.com physically lives on the internet. What happens in that gap?",
+        options: ["The browser already stores the location of every popular website", "The browser asks a DNS server to translate 'github.com' into a numeric IP address — the server's actual location", "GitHub's servers detect your visit and push the page to you automatically", "Your internet provider loads a locally cached copy of the page"],
+        answer: "The browser asks a DNS server to translate 'github.com' into a numeric IP address — the server's actual location",
+        explanation: "DNS (Domain Name System) is the internet's phone book. It converts human-readable domain names into the IP addresses of the servers that actually host them.",
+        detail: "Every server on the internet has an IP address — a number like 140.82.114.4. DNS stores the mapping from names to those numbers. When you type a URL, your computer checks its local cache first, then your router, then your ISP's DNS server. The lookup takes milliseconds. This system is why you can type 'google.com' instead of memorizing '142.250.80.46' — and why changing a website's server only requires updating a single DNS record."
+      },
+      {
+        id: "hw-3-2",
+        question: "You've built a website that works perfectly when you open the files on your laptop. You share the file path with a friend, but they can't open it. What fundamental thing is missing — and what would fix it?",
+        options: ["Your friend needs to install the same browser you use", "The site needs hosting — the files need to live on a server that's always connected to the internet with a public address", "The HTML file needs to be converted to a different format for sharing", "Your friend's operating system is incompatible with your file types"],
+        answer: "The site needs hosting — the files need to live on a server that's always connected to the internet with a public address",
+        explanation: "A file path like /Users/you/project/index.html only works on your machine. Hosting puts your files on a server anyone on the internet can reach.",
+        detail: "When you open a file locally, your browser reads it from your hard drive — no internet involved. When you open a URL, your browser contacts a server somewhere in the world. Hosting services (GitHub Pages, Netlify, Vercel) give your files a permanent public home. GitHub Pages is free for static sites: push your code to a repo, enable Pages in settings, and your site is live at yourusername.github.io/reponame — instantly, for free."
+      },
+      {
+        id: "hw-3-3",
+        question: "A weather app on your phone shows a live forecast. The app clearly didn't build its own weather data. It gets it from a weather service somewhere. What is the mechanism that lets two separate programs share data this way?",
+        options: ["A shared database that both programs read and write to at the same time", "An API — a defined channel through which one program requests data or actions from another", "A direct file transfer that runs in the background between the two apps", "A plugin installed on both the app and the weather service"],
+        answer: "An API — a defined channel through which one program requests data or actions from another",
+        explanation: "An API is a contract between two programs: one defines exactly how to request data, the other promises to respond in a predictable format.",
+        detail: "API stands for Application Programming Interface, but the useful mental model is simpler: it's a menu and an order system. The weather service publishes an API: 'send us a city name here, we'll send back a forecast in this format.' Your app calls that endpoint, gets back structured data (usually JSON), and displays it. This is how almost all modern apps work — your social feed, map directions, and payment flows are all API calls assembled into something that feels seamless."
+      },
+      {
+        id: "hw-3-4",
+        question: "You push DevQuiz to GitHub Pages and share the link. A friend in Tokyo opens it on their phone. Where do your files actually live — and how do they reach your friend?",
+        options: ["Your files stay on your laptop and are sent directly when someone opens the link", "GitHub stores your files on their servers; your friend's browser requests them from GitHub, which sends them over the internet", "Your files are automatically copied to a server closer to Tokyo when someone there visits", "The link streams a live recording of your screen rather than serving the actual files"],
+        answer: "GitHub stores your files on their servers; your friend's browser requests them from GitHub, which sends them over the internet",
+        explanation: "Pushing to GitHub Pages uploads your files to GitHub's servers. Anyone visiting the URL has their browser fetch those files from GitHub — geography doesn't matter.",
+        detail: "When you push, GitHub stores your files on their infrastructure. When your friend visits the URL in Tokyo, their browser sends an HTTP request to GitHub's servers. GitHub responds with your index.html, then the browser requests style.css and game.js, renders everything, and your friend plays the game — even though you're on the other side of the world. The files never moved to Tokyo. The internet carried a copy there. The web is a very fast postal system for files."
+      },
+      {
+        id: "hw-3-5",
+        question: "A news website loads instantly — the layout and navigation appear right away — but the articles and headlines take a full second to appear. The structure is there, the content comes in late. What is most likely happening?",
+        options: ["The CSS file is very large and loading slowly", "JavaScript is calling an API to fetch the content after the page loads, then inserting it into the already-visible structure", "The server is sending the page in two separate chunks to improve speed", "The browser renders images before text, which causes the delay"],
+        answer: "JavaScript is calling an API to fetch the content after the page loads, then inserting it into the already-visible structure",
+        explanation: "Many modern sites load the shell (HTML + CSS) instantly, then JavaScript fetches the actual content from an API and populates the page. This makes the page feel fast even when the data takes a moment.",
+        detail: "This pattern is called an asynchronous fetch. The browser loads and renders the page structure right away, then JavaScript runs and calls an API: 'give me today's headlines'. The API returns structured data (JSON), and JavaScript dynamically injects it into the page. This is why you see loading spinners where content will appear — the shell is ready, the data is in transit. Social media feeds, dashboards, and search results all work exactly this way."
+      }
+    ]
+  },
+
+  // ═══════════════════════════════════════════════════════════════
   // TRACK: Terminal & Git
   // ═══════════════════════════════════════════════════════════════
 
@@ -90,7 +287,7 @@ const LEVELS = [
     questions: [
       {
         id: "tg-1-1",
-        question: "Which command lists all files in a directory, including hidden ones?",
+        question: "You're debugging a project and suspect a .env file exists in the folder, but running `ls` shows nothing unusual. What command reveals hidden files?",
         options: ["ls", "ls -a", "ls -l", "dir"],
         answer: "ls -a",
         explanation: "The -a flag stands for 'all' and includes hidden files (those starting with a dot, like .gitignore).",
@@ -98,7 +295,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-2",
-        question: "What does `cd ..` do?",
+        question: "You're inside /Users/alice/projects/myapp and need to get up to /Users/alice/projects. You type `cd ..` and press enter. What does this do?",
         options: ["Opens the home directory", "Goes up one directory level", "Creates a new directory", "Lists directory contents"],
         answer: "Goes up one directory level",
         explanation: "In shell navigation, `..` always refers to the parent directory, so cd .. moves you one level up in the folder tree.",
@@ -106,7 +303,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-3",
-        question: "Which command creates a new empty file?",
+        question: "You need a placeholder file called notes.txt to exist in your project before your script runs, but you don't want to add any content yet. What command creates it?",
         options: ["mkdir myfile.txt", "new myfile.txt", "touch myfile.txt", "create myfile.txt"],
         answer: "touch myfile.txt",
         explanation: "The `touch` command creates an empty file if it doesn't exist, or updates the timestamp if it does.",
@@ -114,7 +311,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-4",
-        question: "What is `git init` used for?",
+        question: "You've created a new project folder. You run `git init` inside it. What does this do to the folder?",
         options: ["Clones a remote repository", "Initialises a new local Git repository", "Pushes code to GitHub", "Commits staged changes"],
         answer: "Initialises a new local Git repository",
         explanation: "git init creates a .git folder in your current directory, turning it into a Git repository so you can start tracking changes.",
@@ -122,7 +319,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-5",
-        question: "Which command stages all changed files for a commit?",
+        question: "You've edited three files and want to include all of them in your next commit. What do you type to stage everything at once?",
         options: ["git commit -a", "git add .", "git push", "git stage --all"],
         answer: "git add .",
         explanation: "git add . stages all modified and new files in the current directory and subdirectories, making them ready to be committed.",
@@ -130,7 +327,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-6",
-        question: "What does `pwd` print?",
+        question: "You open a new terminal window and aren't sure which directory you're currently in. You type `pwd` and hit enter. What appears?",
         options: ["Password prompt", "List of running processes", "The full path of the current directory", "Disk usage"],
         answer: "The full path of the current directory",
         explanation: "pwd stands for 'print working directory' — it outputs the absolute path of wherever you currently are in the filesystem.",
@@ -138,7 +335,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-7",
-        question: "Which command shows the commit history for a Git repo?",
+        question: "You've inherited a codebase and want to see every commit ever made — author, date, and message for each. What command do you run?",
         options: ["git status", "git history", "git log", "git show"],
         answer: "git log",
         explanation: "git log displays the list of commits in reverse chronological order, including author, date, and commit message.",
@@ -146,7 +343,7 @@ const LEVELS = [
       },
       {
         id: "tg-1-8",
-        question: "What does `rm -rf folder/` do?",
+        question: "A teammate warns you to be careful with `rm -rf`. You're about to clean up an old build folder. What exactly will `rm -rf build/` do?",
         options: ["Renames the folder", "Recursively force-deletes the folder and all its contents", "Removes empty folders only", "Moves folder to trash"],
         answer: "Recursively force-deletes the folder and all its contents",
         explanation: "rm removes files, -r makes it recursive (handles directories), and -f forces deletion without asking for confirmation. Use with extreme caution.",
@@ -173,7 +370,7 @@ const LEVELS = [
     questions: [
       {
         id: "tg-2-1",
-        question: "What does `git stash` do?",
+        question: "You're mid-feature when your lead asks you to fix a bug on main right now. Your changes aren't ready to commit. What does `git stash` do to help you switch context cleanly?",
         options: ["Permanently deletes uncommitted changes", "Saves uncommitted changes temporarily and cleans the working directory", "Creates a new branch", "Pushes changes to a stash remote"],
         answer: "Saves uncommitted changes temporarily and cleans the working directory",
         explanation: "git stash shelves your current work so you can switch context, then use git stash pop to restore it later.",
@@ -181,7 +378,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-2",
-        question: "What is the purpose of a .gitignore file?",
+        question: "You're about to push your project to GitHub, but your repo contains node_modules/, a .env file with API keys, and .DS_Store files. What does adding them to .gitignore do?",
         options: ["Lists contributors to ignore in blame", "Specifies files and folders Git should not track", "Hides the repo from public view", "Disables git log output"],
         answer: "Specifies files and folders Git should not track",
         explanation: "Files listed in .gitignore are excluded from Git tracking — commonly used for node_modules, .env files, build output, and OS files.",
@@ -189,7 +386,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-3",
-        question: "Which command creates and switches to a new branch in one step?",
+        question: "You're starting a new feature and need to create a branch and switch to it in a single command. Which of these options works?",
         options: ["git branch new-branch && git checkout new-branch", "git checkout -b new-branch", "git switch --create new-branch", "Both B and C are correct"],
         answer: "Both B and C are correct",
         explanation: "git checkout -b and git switch --create (or -c) both create a new branch and switch to it in a single command.",
@@ -197,7 +394,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-4",
-        question: "What does `git rebase` do compared to `git merge`?",
+        question: "Your feature branch has 5 commits but main has moved on. Your team wants a clean, linear history. Someone suggests rebasing instead of merging. What's the key difference between the two?",
         options: ["Rebase creates a merge commit; merge does not", "Rebase rewrites commit history to apply commits on top of another branch; merge creates a new merge commit", "They are identical in outcome", "Rebase is only for undoing commits"],
         answer: "Rebase rewrites commit history to apply commits on top of another branch; merge creates a new merge commit",
         explanation: "Rebase produces a linear history by replaying commits; merge preserves the branching structure with a merge commit.",
@@ -205,7 +402,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-5",
-        question: "What does `git diff HEAD` show?",
+        question: "You've made some edits and staged a few of them, but you want to review everything you've changed since your last commit — staged or not. What does `git diff HEAD` show?",
         options: ["Differences between two remote branches", "All changes since the last commit (staged and unstaged)", "Only staged changes", "Changes in the most recent commit only"],
         answer: "All changes since the last commit (staged and unstaged)",
         explanation: "HEAD refers to your most recent commit, so git diff HEAD shows everything that has changed since then.",
@@ -213,7 +410,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-6",
-        question: "What is a 'detached HEAD' state in Git?",
+        question: "You ran `git checkout abc1234` to inspect an old commit. VS Code now shows 'HEAD detached'. What does this state mean?",
         options: ["A corrupted repository", "When HEAD points directly to a commit rather than a branch", "When the remote branch is deleted", "When you have unresolved merge conflicts"],
         answer: "When HEAD points directly to a commit rather than a branch",
         explanation: "Detached HEAD means you're looking at a specific commit, not a branch tip. Any commits you make won't belong to a branch and can be lost.",
@@ -221,7 +418,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-7",
-        question: "What does `git cherry-pick <commit>` do?",
+        question: "You fixed a critical bug on your feature branch but main still has the bug. You need that one fix on main now, without merging the entire feature branch. What does `git cherry-pick <hash>` do?",
         options: ["Deletes the specified commit", "Applies the changes from a specific commit to the current branch", "Copies an entire branch", "Tags a commit"],
         answer: "Applies the changes from a specific commit to the current branch",
         explanation: "cherry-pick lets you grab a single commit from anywhere in the history and replay it on your current branch.",
@@ -229,7 +426,7 @@ const LEVELS = [
       },
       {
         id: "tg-2-8",
-        question: "What is the purpose of `git remote -v`?",
+        question: "You've cloned a repo but aren't sure which GitHub URL it's connected to, or whether it has any other remotes configured. What does `git remote -v` show you?",
         options: ["Connects to a new remote repository", "Displays all configured remote repositories and their URLs", "Verifies remote credentials", "Validates the repo structure"],
         answer: "Displays all configured remote repositories and their URLs",
         explanation: "git remote -v lists all remotes (typically origin) along with their fetch and push URLs.",
@@ -256,7 +453,7 @@ const LEVELS = [
     questions: [
       {
         id: "tg-3-1",
-        question: "What does `git reflog` give you that `git log` does not?",
+        question: "You ran `git reset --hard` and your last 3 commits seem gone from `git log`. A colleague says to check reflog. What does reflog show that `git log` doesn't?",
         options: ["A list of remote commits", "A record of all HEAD movements including actions that aren't in regular history", "Commit messages only", "Diff output for every commit"],
         answer: "A record of all HEAD movements including actions that aren't in regular history",
         explanation: "reflog tracks every movement of HEAD — resets, rebases, checkouts — making it possible to recover 'lost' commits.",
@@ -264,7 +461,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-2",
-        question: "What is the effect of `git commit --amend`?",
+        question: "You just committed with a typo in the message and forgot to stage one file. You haven't pushed yet. What does `git commit --amend` do?",
         options: ["Creates a new branch from the last commit", "Replaces the most recent commit with a new one (rewrites history)", "Reverts the last commit", "Adds a tag to the last commit"],
         answer: "Replaces the most recent commit with a new one (rewrites history)",
         explanation: "amend modifies the last commit's content or message. It rewrites history, so avoid it on commits already pushed to shared branches.",
@@ -272,7 +469,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-3",
-        question: "What does `git bisect` help you do?",
+        question: "Your app has a bug that wasn't there three weeks ago. You have hundreds of commits since then and no idea when it was introduced. What is `git bisect` designed to help you do?",
         options: ["Split a large commit into smaller ones", "Binary-search through commit history to find which commit introduced a bug", "Compare two branches side by side", "Merge two diverged branches"],
         answer: "Binary-search through commit history to find which commit introduced a bug",
         explanation: "git bisect automates a binary search: you mark commits as good or bad, and Git narrows down which commit introduced the regression.",
@@ -280,7 +477,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-4",
-        question: "In a Git merge conflict, what do the `<<<<<<< HEAD` and `>>>>>>> branch-name` markers indicate?",
+        question: "You ran `git merge feature-branch` and your file now contains `<<<<<<< HEAD`, `=======`, and `>>>>>>> feature-branch` markers. What do these mean?",
         options: ["Corrupted file content", "The start of HEAD's version and the end of the incoming branch's version respectively", "Comments added by the other developer", "Lines deleted from both branches"],
         answer: "The start of HEAD's version and the end of the incoming branch's version respectively",
         explanation: "Conflict markers divide the conflicting section: HEAD's version above =======, the incoming branch's version below.",
@@ -288,7 +485,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-5",
-        question: "What does `git push --force-with-lease` do that `git push --force` does not?",
+        question: "You rebased your feature branch and need to force-push to update the remote. Your team also pushes to this branch. Why should you use `--force-with-lease` instead of `--force`?",
         options: ["It encrypts the push", "It checks that no one else has pushed to the remote since your last fetch before overwriting", "It only pushes tags", "It forces a merge commit on the remote"],
         answer: "It checks that no one else has pushed to the remote since your last fetch before overwriting",
         explanation: "--force-with-lease is a safer force push: it fails if the remote has commits you haven't seen, preventing you from overwriting a teammate's work.",
@@ -296,7 +493,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-6",
-        question: "What is a Git 'fast-forward' merge?",
+        question: "You merge a feature branch into main and Git reports 'Fast-forward' instead of creating a merge commit. What does this tell you about the branch history?",
         options: ["A merge that runs faster due to caching", "When the target branch has no new commits, so the branch pointer simply moves forward", "A merge that squashes all commits", "A merge that bypasses conflict detection"],
         answer: "When the target branch has no new commits, so the branch pointer simply moves forward",
         explanation: "A fast-forward merge happens when there's a straight line of commits — no divergence — so Git just moves the pointer rather than creating a merge commit.",
@@ -304,7 +501,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-7",
-        question: "What does `git submodule` allow you to do?",
+        question: "Your project depends on a shared internal library that has its own Git repo. You want to include it at a specific pinned version. What does `git submodule` let you do?",
         options: ["Break a monorepo into multiple repos automatically", "Include another Git repository as a subdirectory within your repo", "Sync branches across multiple remote origins", "Add Git tracking to individual files"],
         answer: "Include another Git repository as a subdirectory within your repo",
         explanation: "Submodules let you embed one Git repository inside another, with a pinned commit reference — useful for shared libraries or external dependencies.",
@@ -312,7 +509,7 @@ const LEVELS = [
       },
       {
         id: "tg-3-8",
-        question: "What is the Git object model's fundamental unit of storage?",
+        question: "Two files in your project have identical content. Git doesn't store the data twice. What is the fundamental storage unit that makes this deduplication possible?",
         options: ["Files", "Commits", "Content-addressable blobs (SHA-1/SHA-256 hashed objects)", "Branches"],
         answer: "Content-addressable blobs (SHA-1/SHA-256 hashed objects)",
         explanation: "Git stores everything (blobs, trees, commits, tags) as content-addressable objects identified by their SHA hash — the hash of the content IS the key.",
@@ -343,7 +540,7 @@ const LEVELS = [
     questions: [
       {
         id: "vc-1-1",
-        question: "What keyboard shortcut opens the Command Palette in VS Code?",
+        question: "You want to change your VS Code theme but can't find the right menu option. You remember there's a searchable list of every editor action. Which shortcut opens it?",
         options: ["Ctrl+P / Cmd+P", "Ctrl+Shift+P / Cmd+Shift+P", "Ctrl+K / Cmd+K", "Ctrl+` / Cmd+`"],
         answer: "Ctrl+Shift+P / Cmd+Shift+P",
         explanation: "The Command Palette lets you run any VS Code command by typing its name — it's the fastest way to access settings, extensions, and editor actions.",
@@ -351,7 +548,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-2",
-        question: "How do you open an integrated terminal in VS Code?",
+        question: "You're editing code in VS Code and need to run a quick command without switching windows or losing your place. Which shortcut opens a terminal panel inside VS Code?",
         options: ["View → Output", "Ctrl+` / Cmd+`", "Ctrl+T / Cmd+T", "File → New Terminal"],
         answer: "Ctrl+` / Cmd+`",
         explanation: "The backtick shortcut toggles the integrated terminal panel, giving you a shell without leaving your editor.",
@@ -359,7 +556,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-3",
-        question: "What is the purpose of a .vscode/ folder in a project?",
+        question: "You want your team to share the same debugger settings and extension recommendations for this project, committed alongside the code. What is the .vscode/ folder designed to hold?",
         options: ["Stores compiled output for VS Code plugins", "Contains project-specific VS Code settings, launch configs, and recommended extensions", "Holds VS Code installation files", "Caches extension telemetry"],
         answer: "Contains project-specific VS Code settings, launch configs, and recommended extensions",
         explanation: "The .vscode/ folder lets you commit editor settings that apply only to this project — like debugger launch configs or workspace-level formatting rules.",
@@ -367,7 +564,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-4",
-        question: "What does Claude Code refer to?",
+        question: "You hear developers talking about a tool that doesn't just suggest code — it actually reads your files, runs your tests, edits code, and commits changes, all from a terminal conversation. What are they describing?",
         options: ["A VS Code color theme", "An AI coding assistant CLI by Anthropic that operates in your terminal", "A GitHub Actions workflow template", "A VS Code plugin for code linting"],
         answer: "An AI coding assistant CLI by Anthropic that operates in your terminal",
         explanation: "Claude Code is Anthropic's agentic coding tool that runs in your terminal, can read and edit files, run commands, and help build software through conversation.",
@@ -375,7 +572,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-5",
-        question: "Which shortcut triggers multi-cursor editing in VS Code (adds a cursor at each selection)?",
+        question: "You need to rename the same variable in 15 places across your file at once. VS Code lets you place multiple cursors simultaneously. Which of these methods achieves that?",
         options: ["Alt+Click / Option+Click", "Ctrl+D / Cmd+D", "Shift+Alt+I / Shift+Option+I", "All of the above"],
         answer: "All of the above",
         explanation: "VS Code offers several ways to place multiple cursors: alt-click for manual placement, Ctrl+D to select the next match, or Shift+Alt+I to add cursors at the end of every selected line.",
@@ -383,7 +580,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-6",
-        question: "What does the CLAUDE.md file do in a Claude Code project?",
+        question: "Claude Code keeps guessing at your project's tech stack and conventions. A colleague suggests adding a CLAUDE.md file. What does it do?",
         options: ["Configures the Claude API key", "Provides persistent project context and instructions that Claude Code reads at the start of every session", "Stores conversation history", "Sets the Claude model version to use"],
         answer: "Provides persistent project context and instructions that Claude Code reads at the start of every session",
         explanation: "CLAUDE.md is a project-level instruction file. Claude Code automatically reads it to understand conventions, architecture, and preferences before taking any action.",
@@ -391,7 +588,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-7",
-        question: "How do you open VS Code for a specific folder from the terminal?",
+        question: "You're in your terminal inside your project folder and want to open VS Code there without using the GUI. What command do you run?",
         options: ["vscode .", "open . --vscode", "code .", "studio ."],
         answer: "code .",
         explanation: "The code CLI command opens VS Code. Adding . opens it in the current directory. This requires the 'Install code command in PATH' shell command to be set up.",
@@ -399,7 +596,7 @@ const LEVELS = [
       },
       {
         id: "vc-1-8",
-        question: "What does 'IntelliSense' refer to in VS Code?",
+        question: "As you type a function call in VS Code, a popup appears showing the parameter names, their types, and a description — without you pressing anything. What is this feature called?",
         options: ["A built-in AI model", "Code completion, parameter hints, and symbol documentation as you type", "An intelligent file search algorithm", "Automatic bug detection"],
         answer: "Code completion, parameter hints, and symbol documentation as you type",
         explanation: "IntelliSense is VS Code's umbrella term for smart completions, method signatures, and inline docs powered by the language server.",
@@ -426,7 +623,7 @@ const LEVELS = [
     questions: [
       {
         id: "vc-2-1",
-        question: "What is an MCP server in the context of Claude Code?",
+        question: "You want Claude Code to query your Postgres database directly during a session, without you manually pasting query results. You configure a tool server in settings.json. What is this called?",
         options: ["A remote build server", "A Model Context Protocol server that extends Claude's capabilities with new tools and resources", "A version of Claude running on-premise", "A middleware proxy for Claude API calls"],
         answer: "A Model Context Protocol server that extends Claude's capabilities with new tools and resources",
         explanation: "MCP servers give Claude Code access to new tools — like database queries, browser automation, or custom APIs — without modifying Claude itself.",
@@ -434,7 +631,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-2",
-        question: "In Claude Code, what does the /clear command do?",
+        question: "Your Claude Code session has been running for an hour. Responses are getting slower and less focused. You suspect the context window is filling up. What does `/clear` do to help?",
         options: ["Clears your terminal screen", "Resets the conversation context, freeing up the context window", "Deletes all files created in the session", "Logs you out of Claude"],
         answer: "Resets the conversation context, freeing up the context window",
         explanation: "/clear wipes the current conversation history so Claude starts fresh, which is useful after a long session or when switching to a new task.",
@@ -442,7 +639,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-3",
-        question: "What are VS Code 'workspace' settings vs. 'user' settings?",
+        question: "Your team has a project-wide rule: 2-space indentation, format on save. You commit these to .vscode/settings.json. What type of settings are these, and how do they relate to each developer's personal VS Code config?",
         options: ["User settings are temporary; workspace settings are permanent", "Workspace settings apply to one project (stored in .vscode/); user settings apply globally to all projects", "They are identical but stored in different formats", "Workspace settings override user settings only on Windows"],
         answer: "Workspace settings apply to one project (stored in .vscode/); user settings apply globally to all projects",
         explanation: "VS Code has a settings hierarchy: user (global defaults), workspace (project-level overrides), and folder (for multi-root workspaces).",
@@ -450,7 +647,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-4",
-        question: "What is the Language Server Protocol (LSP) and why does it matter for editors?",
+        question: "You install a Python language server and find it works in VS Code, Neovim, and Emacs without any extra setup per editor. What standard makes one language tool work across many editors?",
         options: ["A network protocol for syncing code between editors", "A standard interface that decouples language tooling from editor implementation, so one tool works in many editors", "A protocol for streaming AI completions", "A file format for storing language grammars"],
         answer: "A standard interface that decouples language tooling from editor implementation, so one tool works in many editors",
         explanation: "LSP means a Python language server built once works in VS Code, Neovim, Emacs, etc. — avoiding the N×M integration problem of N tools × M editors.",
@@ -458,7 +655,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-5",
-        question: "What does Claude Code's permission system protect against?",
+        question: "Claude Code is about to run a shell command that will delete some files. Instead of doing it silently, it stops and asks for your approval. Why does it do this?",
         options: ["Rate limiting API calls", "Claude performing destructive file or system operations without user approval", "Unauthorized access to Claude's model weights", "Hallucinations in code output"],
         answer: "Claude performing destructive file or system operations without user approval",
         explanation: "Claude Code prompts for permission before taking risky actions (deleting files, running shell commands, etc.) so you stay in control of your system.",
@@ -466,7 +663,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-6",
-        question: "What is the purpose of VS Code's `.editorconfig` support?",
+        question: "Your team uses VS Code, IntelliJ, and Vim. You want everyone's editor to use 2-space indentation and Unix line endings, without touching each person's individual editor config. What does .editorconfig make possible?",
         options: ["Configures the Monaco editor engine", "Enforces consistent coding styles (indentation, line endings) across different editors and IDEs", "Manages VS Code extension settings", "Defines snippets for code templates"],
         answer: "Enforces consistent coding styles (indentation, line endings) across different editors and IDEs",
         explanation: ".editorconfig is a cross-editor standard that sets rules like indent_size and end_of_line, ensuring consistency regardless of which editor a developer uses.",
@@ -474,7 +671,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-7",
-        question: "How does Claude Code's agentic mode differ from a standard AI chat interface?",
+        question: "You give Claude Code a single instruction: 'Add authentication to this Express app.' It reads your codebase, writes the middleware, updates routes, runs the tests, fixes failures, and commits — all on its own. What makes this possible?",
         options: ["It uses a different model", "It can take sequences of actions autonomously (read files, run commands, edit code) rather than just generating text", "It requires no internet connection", "It only works with Python projects"],
         answer: "It can take sequences of actions autonomously (read files, run commands, edit code) rather than just generating text",
         explanation: "Agentic mode means Claude can plan and execute multi-step tasks — not just tell you what to do, but actually do it.",
@@ -482,7 +679,7 @@ const LEVELS = [
       },
       {
         id: "vc-2-8",
-        question: "What does VS Code's 'Remote Development' extension pack enable?",
+        question: "You want to write code locally in VS Code but have it execute inside a Docker container — same environment as production, no 'works on my machine' issues. What does the Remote Development extension pack enable?",
         options: ["Streaming code to a remote display", "Developing inside Docker containers, SSH-connected servers, or WSL as if they were local", "Syncing settings across multiple local machines", "Remote pair programming with real-time cursor sharing"],
         answer: "Developing inside Docker containers, SSH-connected servers, or WSL as if they were local",
         explanation: "Remote Development runs the VS Code server in a remote environment, so you edit and debug as if you're local — but all execution happens remotely.",
@@ -509,7 +706,7 @@ const LEVELS = [
     questions: [
       {
         id: "vc-3-1",
-        question: "What is prompt caching in the Claude API and why does it matter?",
+        question: "You're building an app that sends Claude a 10,000-token system prompt on every API call. You notice some calls are significantly cheaper and faster than others. What mechanism is responsible?",
         options: ["Storing responses in a browser cache", "Caching the processed representation of large system prompts to reduce latency and cost on repeated calls", "Saving prompt templates to a file", "Compressing prompts before sending"],
         answer: "Caching the processed representation of large system prompts to reduce latency and cost on repeated calls",
         explanation: "Prompt caching stores the expensive KV computation for a prefix, so subsequent requests that share that prefix are faster and cheaper.",
@@ -517,7 +714,7 @@ const LEVELS = [
       },
       {
         id: "vc-3-2",
-        question: "What is the purpose of Claude Code 'hooks' in settings.json?",
+        question: "Every time Claude edits a file, you want Prettier to run on it automatically — without asking Claude to remember to do it. You configure this in .claude/settings.json. What feature makes this possible?",
         options: ["Webhooks to notify Anthropic of usage", "Shell commands that automatically execute before or after specific Claude Code events (like after a file edit)", "Plugin APIs for extending VS Code", "Health checks for MCP servers"],
         answer: "Shell commands that automatically execute before or after specific Claude Code events (like after a file edit)",
         explanation: "Hooks let you automate reactions to Claude Code actions — e.g., run tests after Claude edits a file, or format code after each write.",
@@ -525,7 +722,7 @@ const LEVELS = [
       },
       {
         id: "vc-3-3",
-        question: "In VS Code, what does a language server's 'semantic tokens' feature provide?",
+        question: "Your VS Code highlights a local variable and a class property with the same color. After installing a language server with semantic token support, they appear in different colors. What changed?",
         options: ["Syntax highlighting based on grammar rules", "Richer, type-aware highlighting where colors reflect what a token *means* (e.g., a local variable vs. a class property)", "Tokenization of strings for AI completion", "Token counting for LLM context management"],
         answer: "Richer, type-aware highlighting where colors reflect what a token *means* (e.g., a local variable vs. a class property)",
         explanation: "Semantic tokens go beyond syntax patterns — the language server understands your code's types and scope, providing more accurate and meaningful coloring.",
@@ -533,7 +730,7 @@ const LEVELS = [
       },
       {
         id: "vc-3-4",
-        question: "What are Claude Code 'subagents' and when are they useful?",
+        question: "You ask Claude Code to search a large codebase across 20 different modules simultaneously. Instead of doing it sequentially and filling its context, it spawns multiple instances to work in parallel. What are these called?",
         options: ["Smaller Claude models for cheaper tasks", "Parallel Claude instances spawned to handle independent subtasks, protecting the main context window", "Background workers for file watching", "API rate limit bypass mechanisms"],
         answer: "Parallel Claude instances spawned to handle independent subtasks, protecting the main context window",
         explanation: "Subagents run in parallel on independent tasks (like searching different parts of a codebase) so results land back in the main session without overwhelming its context.",
@@ -564,7 +761,7 @@ const LEVELS = [
     questions: [
       {
         id: "bs-1-1",
-        question: "What does CI/CD stand for?",
+        question: "Every time your team pushes code, tests run automatically on GitHub. When they pass, the code is automatically deployed to production. What is this practice called?",
         options: ["Code Integration / Code Deployment", "Continuous Integration / Continuous Deployment (or Delivery)", "Container Infrastructure / Container Delivery", "Central Instance / Core Distribution"],
         answer: "Continuous Integration / Continuous Deployment (or Delivery)",
         explanation: "CI automatically builds and tests code on every push. CD automatically deploys passing builds to staging or production.",
@@ -572,7 +769,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-2",
-        question: "What is a package.json file?",
+        question: "A new developer joins your Node.js project and asks where to find what packages are needed, what scripts to run, and what the project is called. Which file has all of that?",
         options: ["A compiled binary package", "A Node.js project manifest that lists dependencies, scripts, and metadata", "A JSON export of a database schema", "A config file for shipping Docker images"],
         answer: "A Node.js project manifest that lists dependencies, scripts, and metadata",
         explanation: "package.json is the heart of any Node.js project — it lists what packages are needed, defines run scripts, and identifies the project.",
@@ -580,7 +777,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-3",
-        question: "What is the purpose of environment variables (like those in a .env file)?",
+        question: "Your app needs a Stripe API key for production and a test key for local dev — and neither can be committed to Git. Where do these values live, and why?",
         options: ["To store compiled code", "To configure runtime behaviour (API keys, database URLs) outside of source code", "To define CSS variables", "To set the Node.js version"],
         answer: "To configure runtime behaviour (API keys, database URLs) outside of source code",
         explanation: "Environment variables keep secrets and environment-specific config out of your codebase — production and development can have different values without code changes.",
@@ -588,7 +785,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-4",
-        question: "What does `npm install` do?",
+        question: "You clone a Node.js project to your machine. There's a package.json but no node_modules/ folder. What does running `npm install` do?",
         options: ["Installs Node.js itself", "Downloads and installs all packages listed in package.json into node_modules", "Updates packages to latest versions", "Runs the application"],
         answer: "Downloads and installs all packages listed in package.json into node_modules",
         explanation: "npm install reads package.json (and package-lock.json for exact versions) and downloads all dependencies into the node_modules folder.",
@@ -596,7 +793,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-5",
-        question: "What is a Dockerfile?",
+        question: "You want your app to run identically on every developer's machine and on production, regardless of what OS or libraries they have installed. What does a Dockerfile let you define?",
         options: ["A diagram of Docker's architecture", "A text script that defines how to build a Docker container image", "A config file for Docker networking", "A log file from Docker daemon"],
         answer: "A text script that defines how to build a Docker container image",
         explanation: "A Dockerfile is a set of instructions (FROM, RUN, COPY, CMD, etc.) that Docker reads to build a reproducible image of your application.",
@@ -604,7 +801,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-6",
-        question: "What is semantic versioning (SemVer)?",
+        question: "You see a package update from v2.1.3 to v3.0.0 and another from v2.1.3 to v2.2.0. What do these version number changes tell you about what changed in each?",
         options: ["Versioning based on release dates", "A MAJOR.MINOR.PATCH numbering scheme where each part signals the type of change", "A Git tagging convention for release branches", "An npm-specific versioning system"],
         answer: "A MAJOR.MINOR.PATCH numbering scheme where each part signals the type of change",
         explanation: "MAJOR = breaking change, MINOR = new backward-compatible feature, PATCH = backward-compatible bug fix. E.g., 2.1.3.",
@@ -612,7 +809,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-7",
-        question: "What is the difference between 'linting' and 'formatting' code?",
+        question: "Your CI pipeline runs two separate tools: one warns you about a potential null reference, the other rewrites your tabs to spaces. What is each tool doing?",
         options: ["They are the same thing", "Linting finds logical/style errors; formatting automatically adjusts whitespace and layout", "Linting runs at runtime; formatting runs at compile time", "Linting is for CSS; formatting is for JavaScript"],
         answer: "Linting finds logical/style errors; formatting automatically adjusts whitespace and layout",
         explanation: "A linter (like ESLint) flags potential bugs and style violations; a formatter (like Prettier) automatically rewrites code to a consistent style.",
@@ -620,7 +817,7 @@ const LEVELS = [
       },
       {
         id: "bs-1-8",
-        question: "What does 'deploying to production' mean?",
+        question: "Your app has passed all tests and is approved. You run the deploy command. Where does your code go, and who can now interact with it?",
         options: ["Merging a pull request", "Making your application available to real users on live infrastructure", "Running end-to-end tests", "Tagging a release in Git"],
         answer: "Making your application available to real users on live infrastructure",
         explanation: "Production is the live environment where real users interact with your app. Deploying means pushing new code there.",
@@ -647,7 +844,7 @@ const LEVELS = [
     questions: [
       {
         id: "bs-2-1",
-        question: "What is the purpose of a reverse proxy like Nginx in a production setup?",
+        question: "Your Node.js app runs on port 3000 but needs to serve HTTPS on port 443, cache static files, and route to multiple backend services. What sits in front of your app to handle all of this?",
         options: ["To run Node.js applications", "To sit in front of application servers, handling SSL termination, load balancing, and static file serving", "To provide a database connection pool", "To run Docker containers"],
         answer: "To sit in front of application servers, handling SSL termination, load balancing, and static file serving",
         explanation: "A reverse proxy is the public-facing entry point that distributes traffic, handles HTTPS, and protects backend servers from direct exposure.",
@@ -655,7 +852,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-2",
-        question: "What is a GitHub Action?",
+        question: "Every time your team opens a pull request, tests run automatically and a Slack notification fires — all configured in a YAML file in your repo. What is this called?",
         options: ["A GitHub keyboard shortcut", "An automated workflow that runs on GitHub's infrastructure in response to repository events", "A GitHub CLI command", "A webhook endpoint"],
         answer: "An automated workflow that runs on GitHub's infrastructure in response to repository events",
         explanation: "GitHub Actions are YAML-defined workflows triggered by events (push, PR, schedule) that can run tests, build images, deploy code, and more.",
@@ -663,7 +860,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-3",
-        question: "What is the difference between horizontal and vertical scaling?",
+        question: "Your web app is struggling under peak traffic. You could upgrade to a bigger server, or add more servers behind a load balancer. What do these two approaches represent?",
         options: ["Horizontal = faster CPUs; vertical = more servers", "Vertical = adding more CPU/RAM to one server; horizontal = adding more server instances", "They are cloud-provider-specific terms for the same concept", "Horizontal scaling requires Kubernetes; vertical does not"],
         answer: "Vertical = adding more CPU/RAM to one server; horizontal = adding more server instances",
         explanation: "Scale up (vertical) by upgrading the machine; scale out (horizontal) by adding more machines behind a load balancer.",
@@ -671,7 +868,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-4",
-        question: "What is a feature flag?",
+        question: "You've shipped a new checkout redesign to production, but only your internal team can see it. The code is live, but users don't get it until you flip a switch. What mechanism makes this possible?",
         options: ["A Git tag for a feature branch", "A runtime toggle that enables or disables a feature without deploying new code", "A CSS class for feature highlighting", "A permission level in a SaaS product"],
         answer: "A runtime toggle that enables or disables a feature without deploying new code",
         explanation: "Feature flags decouple deployment from release — code ships to production but a feature stays off until you're ready to turn it on for users.",
@@ -679,7 +876,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-5",
-        question: "What does 'infrastructure as code' (IaC) mean?",
+        question: "Your production database was configured manually through a web console 18 months ago. Nobody remembers the exact settings. A teammate says the solution is IaC. What does that mean?",
         options: ["Writing application code that creates databases", "Defining and provisioning cloud infrastructure using code and configuration files rather than manual UI clicks", "Storing infrastructure diagrams in Git", "Compiling server configurations into binaries"],
         answer: "Defining and provisioning cloud infrastructure using code and configuration files rather than manual UI clicks",
         explanation: "IaC tools like Terraform and AWS CDK let you define servers, databases, and networking in version-controlled files that can be applied, reviewed, and rolled back like code.",
@@ -687,7 +884,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-6",
-        question: "What is a 'monorepo' and what is the main benefit?",
+        question: "Your company keeps its frontend, backend, and shared component library in separate repos. Every cross-team change requires coordinating three PRs. A colleague suggests a monorepo. What does that change?",
         options: ["A single-branch Git workflow", "A single repository that contains multiple related projects or services, sharing tooling and dependencies", "A repository with a single large commit", "A mono-cloud infrastructure strategy"],
         answer: "A single repository that contains multiple related projects or services, sharing tooling and dependencies",
         explanation: "Monorepos keep related code (frontend, backend, shared libs) in one repo, making cross-project changes atomic and dependency management consistent.",
@@ -695,7 +892,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-7",
-        question: "What does a load balancer do?",
+        question: "Your app runs on 5 servers. You need incoming requests spread across all of them, and if one crashes, traffic should automatically route to the others. What component provides this?",
         options: ["Monitors server CPU and memory", "Distributes incoming network traffic across multiple backend servers", "Compresses HTTP responses", "Manages SSL certificates"],
         answer: "Distributes incoming network traffic across multiple backend servers",
         explanation: "A load balancer sits in front of your servers and routes each request to one of them, spreading the load and providing failover if a server goes down.",
@@ -703,7 +900,7 @@ const LEVELS = [
       },
       {
         id: "bs-2-8",
-        question: "What is the role of a staging environment?",
+        question: "You're about to deploy a database migration to production. Your team insists on running it in staging first. A junior dev asks why staging exists when you already have a test suite. What do you tell them?",
         options: ["A local development environment", "A production-like environment for final testing before deploying to live users", "A Git branch for feature development", "An environment for running unit tests"],
         answer: "A production-like environment for final testing before deploying to live users",
         explanation: "Staging mirrors production as closely as possible, letting you catch integration issues, test migrations, and validate behaviour before real users are affected.",
@@ -730,7 +927,7 @@ const LEVELS = [
     questions: [
       {
         id: "bs-3-1",
-        question: "What is a blue-green deployment?",
+        question: "You need to deploy a major update with zero downtime and the ability to instantly roll back if anything breaks. Your infrastructure team suggests a blue-green approach. How does it work?",
         options: ["Deploying to different geographic regions", "Running two identical production environments (blue = live, green = new), switching traffic when ready", "A Git branching strategy", "A Kubernetes pod restart strategy"],
         answer: "Running two identical production environments (blue = live, green = new), switching traffic when ready",
         explanation: "Blue-green deployments allow instant rollback — if green has problems, flip the load balancer back to blue and no one notices.",
@@ -738,7 +935,7 @@ const LEVELS = [
       },
       {
         id: "bs-3-2",
-        question: "What does the 12-factor app methodology's 'stateless processes' principle mean?",
+        question: "Your app stores user sessions in-memory. When you add a second server, users randomly get logged out because requests hit different instances. A teammate says this violates 12-factor's stateless process principle. What does that mean?",
         options: ["Apps must have no state at all", "Each process should not store shared session state locally; state belongs in backing services like Redis or a database", "Processes must restart every 12 seconds", "State should be stored in environment variables"],
         answer: "Each process should not store shared session state locally; state belongs in backing services like Redis or a database",
         explanation: "Stateless processes can be started, stopped, or scaled horizontally without data loss because no state lives inside the process itself.",
@@ -746,7 +943,7 @@ const LEVELS = [
       },
       {
         id: "bs-3-3",
-        question: "What is DORA and what are its four key metrics?",
+        question: "Your engineering manager asks you to improve the team's DORA metrics. What does DORA actually measure, and what are its four key metrics?",
         options: ["A DevOps certification body", "A research program measuring engineering effectiveness via deployment frequency, lead time, MTTR, and change failure rate", "A Docker orchestration runtime architecture", "A database operations reliability assessment"],
         answer: "A research program measuring engineering effectiveness via deployment frequency, lead time, MTTR, and change failure rate",
         explanation: "DORA (DevOps Research and Assessment) found these four metrics reliably predict software delivery performance and organisational outcomes.",
@@ -754,7 +951,7 @@ const LEVELS = [
       },
       {
         id: "bs-3-4",
-        question: "What is eventual consistency in distributed systems?",
+        question: "You update your profile picture on a social platform. A friend in another country still sees your old photo 10 seconds later. There's no bug — this is by design. What consistency model explains it?",
         options: ["A guarantee that all nodes will always have identical data", "A model where nodes may have temporarily different data but will converge to the same state over time", "Consistent hashing for load distribution", "A consistency level in ACID database transactions"],
         answer: "A model where nodes may have temporarily different data but will converge to the same state over time",
         explanation: "Eventual consistency trades immediate consistency for availability and partition tolerance (per the CAP theorem) — data will be consistent, eventually.",
@@ -785,7 +982,7 @@ const LEVELS = [
     questions: [
       {
         id: "hp-1-1",
-        question: "Who is often credited as the first computer programmer?",
+        question: "In the 1840s, someone wrote an algorithm for Charles Babbage's mechanical Analytical Engine — decades before any computer existed. Who is credited as the first programmer?",
         options: ["Alan Turing", "Grace Hopper", "Ada Lovelace", "Charles Babbage"],
         answer: "Ada Lovelace",
         explanation: "Ada Lovelace wrote what is considered the first algorithm intended for execution by a machine — for Charles Babbage's Analytical Engine — in the 1840s.",
@@ -793,7 +990,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-2",
-        question: "What significant contribution did Grace Hopper make to computing?",
+        question: "In 1952, a US Navy researcher proved that human-readable code could be automatically translated into machine instructions — something most people thought was impossible. She also helped design a language still running banking systems today. What did she contribute?",
         options: ["Invented the transistor", "Created the first compiler and helped develop COBOL", "Designed the first GUI", "Wrote the Unix operating system"],
         answer: "Created the first compiler and helped develop COBOL",
         explanation: "Grace Hopper developed the A-0 compiler in 1952 — the first program that translated symbolic code into machine code — and was central to creating COBOL.",
@@ -801,7 +998,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-3",
-        question: "What was the first widely-used high-level programming language?",
+        question: "In 1957, IBM released a language that let scientists write mathematical formulas directly as code for the first time, rather than writing in assembly. What was it?",
         options: ["C", "COBOL", "FORTRAN", "BASIC"],
         answer: "FORTRAN",
         explanation: "FORTRAN (Formula Translation), developed by IBM in 1957, was the first high-level language to see widespread adoption, initially for scientific computing.",
@@ -809,7 +1006,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-4",
-        question: "What did Alan Turing contribute to computer science?",
+        question: "In 1936, a British mathematician published a paper that defined what it means to 'compute' — before any modern computer existed. His theoretical model proved some problems are mathematically unsolvable. What was his key contribution?",
         options: ["Invented the first transistor", "Developed the theoretical foundation of computation with the Turing Machine model and the concept of computability", "Created the C programming language", "Designed the first database system"],
         answer: "Developed the theoretical foundation of computation with the Turing Machine model and the concept of computability",
         explanation: "Turing's 1936 paper defined what it means to 'compute' and proved some problems are unsolvable — foundations that underpin all of computer science.",
@@ -817,7 +1014,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-5",
-        question: "In what year was the World Wide Web invented, and by whom?",
+        question: "A researcher at CERN wanted scientists around the world to share documents instantly over the internet. He invented HTML, HTTP, and URLs — then released them royalty-free. Who built the Web, and when?",
         options: ["1983 by Vint Cerf", "1991 by Tim Berners-Lee", "1995 by Marc Andreessen", "1969 by ARPA"],
         answer: "1991 by Tim Berners-Lee",
         explanation: "Tim Berners-Lee proposed the Web in 1989 and launched the first website in 1991 while at CERN, combining HTTP, HTML, and URLs.",
@@ -825,7 +1022,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-6",
-        question: "What is Unix and why is it historically significant?",
+        question: "In 1969, two Bell Labs engineers built an OS around small composable tools connected by pipes and the idea that 'everything is a file.' Linux and macOS are direct descendants. What were they building?",
         options: ["The first GUI operating system", "An operating system developed at Bell Labs in 1969 that introduced foundational concepts like pipes, file permissions, and the C language", "IBM's mainframe OS", "The predecessor to MS-DOS"],
         answer: "An operating system developed at Bell Labs in 1969 that introduced foundational concepts like pipes, file permissions, and the C language",
         explanation: "Unix, built by Thompson and Ritchie, defined the 'everything is a file' philosophy and small composable tools connected by pipes — still the basis of Linux and macOS today.",
@@ -833,7 +1030,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-7",
-        question: "What did the introduction of the GUI (Graphical User Interface) change about computing?",
+        question: "Apple's 1984 Macintosh replaced text commands with windows, icons, and a mouse. Billions of people who had never typed a command could suddenly use a computer. What did the GUI fundamentally change?",
         options: ["It made computers faster", "It made computers accessible to non-technical users by replacing text commands with visual elements", "It introduced multi-threading", "It enabled networking"],
         answer: "It made computers accessible to non-technical users by replacing text commands with visual elements",
         explanation: "The GUI, pioneered at Xerox PARC and popularised by Apple's Macintosh in 1984, transformed computing from a specialists' tool to a mass-market product.",
@@ -841,7 +1038,7 @@ const LEVELS = [
       },
       {
         id: "hp-1-8",
-        question: "What is open source software and which landmark project helped establish the movement?",
+        question: "Linus Torvalds released a kernel in 1991 that anyone could read, modify, and redistribute. Today it runs most of the world's servers. What kind of software is this, and what movement did it help establish?",
         options: ["Software with visible source code owned by one company; established by Microsoft", "Software whose source code is publicly available to view, modify, and distribute; Linux helped establish the movement", "Free (no cost) software with no licensing terms", "Software developed by government agencies"],
         answer: "Software whose source code is publicly available to view, modify, and distribute; Linux helped establish the movement",
         explanation: "Open source means anyone can study, modify, and distribute the code. Linux (1991) proved open collaboration could produce world-class software.",
@@ -868,7 +1065,7 @@ const LEVELS = [
     questions: [
       {
         id: "hp-2-1",
-        question: "What paradigm shift did Object-Oriented Programming (OOP) introduce over procedural programming?",
+        question: "Before OOP, large programs were organized as lists of instructions acting on shared data. OOP grouped related data and behavior together. What shift did this introduce — and what three concepts does it enable?",
         options: ["OOP removed the need for variables", "OOP organised code into objects combining data and behaviour, enabling encapsulation, inheritance, and polymorphism", "OOP made programs run faster by default", "OOP was purely a UI programming style"],
         answer: "OOP organised code into objects combining data and behaviour, enabling encapsulation, inheritance, and polymorphism",
         explanation: "OOP modelled programs as interacting objects, making large codebases more manageable by hiding complexity behind interfaces.",
@@ -876,7 +1073,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-2",
-        question: "What was the 'Browser Wars' and what was its lasting impact?",
+        question: "In the late 1990s, Microsoft bundled a browser with Windows to crush a rival. The defeated company open-sourced its code — which eventually became Firefox and drove the creation of Chrome. What was this conflict called, and what did it produce?",
         options: ["A competition between search engines", "The late-1990s rivalry between Netscape and Internet Explorer that drove web standards and eventually led to Firefox and modern browsers", "A standards body dispute over HTTP", "The competition between Chrome and Safari"],
         answer: "The late-1990s rivalry between Netscape and Internet Explorer that drove web standards and eventually led to Firefox and modern browsers",
         explanation: "Netscape vs. IE accelerated web development but fragmented it with incompatible features. Netscape's defeat led to Mozilla and eventually Firefox.",
@@ -884,7 +1081,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-3",
-        question: "What problem did the Agile Manifesto (2001) respond to?",
+        question: "In 2001, seventeen developers gathered and wrote a manifesto. They were reacting to a development approach that locked in requirements for years, produced massive documentation, and routinely delivered projects late — or never. What were they pushing back against?",
         options: ["The Y2K bug", "The failure rates of heavyweight, plan-driven software development (Waterfall) to deliver working software on time", "The proliferation of programming languages", "The lack of open-source licensing frameworks"],
         answer: "The failure rates of heavyweight, plan-driven software development (Waterfall) to deliver working software on time",
         explanation: "Agile reacted to Waterfall's rigid phase-gate model that delivered software years late (or never) — it prioritised working software, collaboration, and responding to change.",
@@ -892,7 +1089,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-4",
-        question: "What was the significance of Java's 'Write Once, Run Anywhere' promise?",
+        question: "Sun Microsystems released a language in 1995 that compiled your code once, and the resulting binary ran on Windows, Mac, Linux, and everything else — without recompiling. How did it do this?",
         options: ["Java apps had no bugs", "Java compiled to bytecode run on a virtual machine, making it platform-independent for the first time at scale", "Java was the first interpreted language", "Java eliminated the need for operating systems"],
         answer: "Java compiled to bytecode run on a virtual machine, making it platform-independent for the first time at scale",
         explanation: "The JVM abstracted away the operating system, so a Java program compiled once could run on Windows, Mac, Linux, or any platform with a JVM.",
@@ -900,7 +1097,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-5",
-        question: "What was Moore's Law and why has it become less reliable since ~2010?",
+        question: "For 50 years, developers didn't worry much about inefficient code — faster hardware would compensate. That assumption is no longer safe. What was the observation that drove those gains, and why is it slowing?",
         options: ["CPU clock speeds double every 18 months indefinitely", "Transistor count roughly doubles every two years due to physical miniaturisation limits that are now being reached", "RAM capacity doubles every year due to manufacturing economies", "Network bandwidth doubles every 18 months"],
         answer: "Transistor count roughly doubles every two years due to physical miniaturisation limits that are now being reached",
         explanation: "Gordon Moore's 1965 observation held for ~50 years, but transistors are now near atomic scale, making further miniaturisation exponentially harder.",
@@ -908,7 +1105,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-6",
-        question: "What sparked the emergence of cloud computing as a mainstream platform?",
+        question: "In 2006, a company launched a service that let you rent virtual servers by the hour through an API call — no hardware purchase, no data centre, just a credit card. What was this, and who launched it?",
         options: ["The invention of WiFi", "Amazon Web Services launching EC2 in 2006, making scalable server infrastructure available on-demand via API", "The release of VMware virtualisation", "Google's acquisition of YouTube"],
         answer: "Amazon Web Services launching EC2 in 2006, making scalable server infrastructure available on-demand via API",
         explanation: "AWS EC2 let developers rent virtual servers by the hour via an API, eliminating the need to buy physical hardware — the origin of modern cloud computing.",
@@ -916,7 +1113,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-7",
-        question: "What was the significance of the V8 JavaScript engine (2008)?",
+        question: "Before 2008, JavaScript was considered too slow to run on servers. Google released an engine that compiled it directly to machine code. What did this unlock, and what came next?",
         options: ["It was the first JavaScript engine", "V8 compiled JavaScript to native machine code, making it fast enough for Node.js to run JS on servers", "V8 introduced async/await to JavaScript", "V8 was the first open-source browser engine"],
         answer: "V8 compiled JavaScript to native machine code, making it fast enough for Node.js to run JS on servers",
         explanation: "Google's V8 brought JIT compilation to JavaScript, dramatically improving speed and enabling Ryan Dahl to build Node.js (2009) — JavaScript on the server.",
@@ -924,7 +1121,7 @@ const LEVELS = [
       },
       {
         id: "hp-2-8",
-        question: "What problem did containerisation (Docker, 2013) solve?",
+        question: "A developer's app works perfectly on their laptop but crashes on the staging server due to a different library version. Docker was built to solve exactly this class of problem. What is it called?",
         options: ["Slow JavaScript performance", "The 'works on my machine' problem — inconsistent environments between development, staging, and production", "Database scaling for web apps", "Slow network I/O in cloud servers"],
         answer: "The 'works on my machine' problem — inconsistent environments between development, staging, and production",
         explanation: "Docker packaged apps with all dependencies into portable containers that run identically regardless of the host environment.",
@@ -951,7 +1148,7 @@ const LEVELS = [
     questions: [
       {
         id: "hp-3-1",
-        question: "What was the Church-Turing thesis and why does it matter?",
+        question: "In 1936, two researchers working independently — one using abstract tape machines, one using mathematical functions — arrived at equivalent definitions of computation. Their work implies all general-purpose languages are equally powerful. What is this principle called?",
         options: ["A legal framework for software patents", "The conjecture that any function computable by any reasonable model of computation can be computed by a Turing Machine — defining the limits of computation", "A theorem about parallel processing efficiency", "A proof that all programs terminate"],
         answer: "The conjecture that any function computable by any reasonable model of computation can be computed by a Turing Machine — defining the limits of computation",
         explanation: "Church and Turing independently showed their models were equivalent, suggesting they captured the true meaning of 'computation' — all programming languages are equally powerful in this sense.",
@@ -959,7 +1156,7 @@ const LEVELS = [
       },
       {
         id: "hp-3-2",
-        question: "What was the Halting Problem and why is it unsolvable?",
+        question: "A programmer asks: can I write a general tool that looks at any program and tells me whether it will ever finish or loop forever? Turing proved in 1936 that no such tool can exist. What is this fundamental limit called, and why is it unsolvable?",
         options: ["A problem with early hardware stopping unexpectedly", "Turing proved no general algorithm can determine whether an arbitrary program will halt or run forever — a fundamental limit of computation", "A race condition in multi-threaded programs", "An unsolved optimisation problem in compiler design"],
         answer: "Turing proved no general algorithm can determine whether an arbitrary program will halt or run forever — a fundamental limit of computation",
         explanation: "Turing proved by diagonalisation that you cannot write a program that correctly decides for all programs whether they halt — some questions are formally undecidable.",
@@ -967,7 +1164,7 @@ const LEVELS = [
       },
       {
         id: "hp-3-3",
-        question: "What was the significance of Dijkstra's 'Go To Statement Considered Harmful' (1968)?",
+        question: "In 1968, a computer scientist published a letter arguing that a popular control flow technique was making programs impossible to read or reason about. His critique helped end 'spaghetti code'. What was he criticising, and what did it help establish?",
         options: ["It introduced the goto statement to programming", "It argued that goto made programs unreadable and unmaintainable, helping establish structured programming as the standard paradigm", "It proposed garbage collection for memory management", "It critiqued Fortran's performance"],
         answer: "It argued that goto made programs unreadable and unmaintainable, helping establish structured programming as the standard paradigm",
         explanation: "Dijkstra argued programs using goto are hard to reason about because control flow becomes arbitrary — advocating for loops and conditionals instead.",
@@ -975,7 +1172,7 @@ const LEVELS = [
       },
       {
         id: "hp-3-4",
-        question: "What was the role of Bell Labs in shaping modern computing?",
+        question: "One research institution produced the transistor, information theory, Unix, and the C language — across two decades of work with no immediate commercial pressure. Which institution was this, and what made its model so productive?",
         options: ["It invented the internet", "It produced Unix, the C language, the transistor, and foundational work in information theory — arguably the most prolific research institution in computing history", "It created the first commercial PC", "It standardised TCP/IP networking"],
         answer: "It produced Unix, the C language, the transistor, and foundational work in information theory — arguably the most prolific research institution in computing history",
         explanation: "Bell Labs (AT&T's research arm) produced the transistor (1947), information theory (Shannon, 1948), Unix (1969), C (1972), and many other foundational contributions.",
